@@ -1,7 +1,7 @@
 import React from "react"
 
 function Tile(props){
-    if(props.light == "true"){
+    if(props.light && props.light == "true"){
         return(
             <div className = "tile light" id={props.id}>
             </div>
@@ -16,6 +16,7 @@ function Tile(props){
 function Board(props){
 // A chess board is an 8 x 8 board with alternating colors with A1 being a dark tile
     let boardArr = [];
+    let blackBoard = props.black && props.black == "true";
     // If the board is white, top down the rows should go 8-1, otherwise it should go 1-8
     for (let i = 0; i < 8; i++) {
         let row = []
@@ -23,11 +24,14 @@ function Board(props){
             let tileId = (8-i)+TileLetter(j)
 
             // Create the checkerboard effect by checking row num and alternate
-            let tile = ((j + i) % 2) ? <Tile light = "false" id = {tileId}/> : <Tile light = "true" id = {tileId}/>;
+            let tile = ((j + i) % 2) ? <Tile id = {tileId}/> : <Tile light = "true" id = {tileId}/>;
             row.push(tile);
         }
+        if(blackBoard) {row.reverse()}
         boardArr.push(<div id = {"row"+(8-i)} class='row'>{row}</div>)
     }
+    if (blackBoard) {boardArr.reverse()}
+
     return <div id = "board"> {boardArr} </div>;
 }
 

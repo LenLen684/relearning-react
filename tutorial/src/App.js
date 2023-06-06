@@ -6,7 +6,7 @@ function App() {
   return (
     <div className='App'>
       <p>Test</p>
-      <Board />
+      <Board black = "true"/>
     </div>
   );
 }
