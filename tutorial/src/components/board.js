@@ -8,12 +8,12 @@ function Tile(props){
         )
     }
     return(
-        <div class = "tile" id={props.id}>
+        <div className = "tile" id={props.id}>
         </div>
     )
 }
 
-function Board(props){
+function NewBoard(props){
 // A chess board is an 8 x 8 board with alternating colors with A1 being a dark tile
     let boardArr = [];
     let blackBoard = props.black && props.black == "true";
@@ -28,7 +28,7 @@ function Board(props){
             row.push(tile);
         }
         if(blackBoard) {row.reverse()}
-        boardArr.push(<div id = {"row"+(8-i)} class='row'>{row}</div>)
+        boardArr.push(<div id = {"row"+(8-i)} className='row'>{row}</div>)
     }
     if (blackBoard) {boardArr.reverse()}
 
@@ -69,4 +69,4 @@ function TileLetter(num){
     return tileLetter
 }
 
-export {Board};
+export {NewBoard};

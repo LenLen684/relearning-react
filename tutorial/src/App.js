@@ -1,12 +1,14 @@
 import logo from './logo.svg';
-import {Board} from './components/board.js';
+import {NewBoard} from './components/board.js';
 import './App.css';
+import { Piece } from './components/pieces';
 
 function App() {
   return (
     <div className='App'>
       <p>Test</p>
-      <Board black = "true"/>
+      <NewBoard black = "true"/>
+      <Piece kind="king"/>
     </div>
   );
 }
