@@ -32,4 +32,9 @@ function TileLetter(num){
     return tileLetter
 }
 
-export {TileLetter}
+//Using the id of both the parent div and the piece, you can produce movement on the board
+function AddPieceToTile(pieceId, parentId) {
+    document.getElementById(parentId).appendChild(document.getElementById(pieceId))
+}
+
+export {TileLetter, AddPieceToTile}

@@ -27,7 +27,10 @@ function Piece(props){
             default:
                 break;
         }
-        return <img src={"/assets/"+pieceImg} className="piece" id={props.id}></img>
+        const pieceClick = () => {
+            console.log(kind + " was clicked")
+        }
+        return <img src={"/assets/"+pieceImg} className="piece" id={props.id} onClick={pieceClick}></img>
     }
 }
 
@@ -75,6 +78,39 @@ function SpawnPieces(){
         }
     }
     return pieces
+}
+
+// Function to handle all movement of the pieces
+// Takes in the kind of piece and determines what kind of base movement it can do
+function Movement(kind){
+    switch (kind.toLowerCase()) {
+        case "king":
+            //King can only move 1 space, omnidirectional and can take on those spaces
+            //King can casle
+            break;
+        case "pawn":
+            //pawn can move 2 spaces forward if on starting space
+            //pawn can move 1 space forward otherwise
+            //pawn can take on diagonal spaces
+            //en passant
+            //when pawn reaches end of board, changes to different piece of the player's choosing
+            break;
+        case "rook":
+            //Rook can move and take vertically and horizontally
+            //Castling
+            break;
+        case "knight":
+            //Moves in an L shape (2 vertical 1 horizontal or 2 horizontal, 1 vertical)
+            break;
+        case "queen":
+            //Queen can move and take omnidirectionally, diagonal + vertical + horizontal
+            break;
+        case "bishop":
+            //Bishop moves and takes on the diagonals only
+            break;
+        default:
+            break;
+    }
 }
 
 export {Piece, SpawnPieces}
