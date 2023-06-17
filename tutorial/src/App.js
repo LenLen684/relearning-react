@@ -1,14 +1,16 @@
 import logo from './logo.svg';
-import {NewBoard} from './components/board.js';
+import {CleanBoard, FillBoard} from './components/board.js';
 import './App.css';
-import { Piece } from './components/pieces';
+import { Piece, SpawnPieces } from './components/pieces';
 
 function App() {
   return (
     <div className='App'>
       <p>Test</p>
-      <NewBoard black = "true"/>
-      <Piece kind="king"/>
+      <SpawnPieces/>
+      {/* <Piece kind="king" id="wKing"/> */}
+      <CleanBoard black = "true"/>
+      {/* <button onclick={FillBoard}>New Game</button> */}
     </div>
   );
 }
