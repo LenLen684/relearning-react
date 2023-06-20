@@ -58,9 +58,20 @@ body{
 .light{
   background-color: #82bdce;
 }
+
+.highlight{
+  background-image: radial-gradient(#528f7dd0, #528f7dd0);
+}
+
+.movement{
+  background-image: radial-gradient(#528f7dd0 40%, #528f7d00 40%);
+
+}
+
 .row{
   display: flex;
 }
+
 .piece{
   height: 80px;
 }

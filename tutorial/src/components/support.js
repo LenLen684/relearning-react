@@ -32,6 +32,8 @@ function TileLetter(num){
     return tileLetter
 }
 
+//Using the letter, return the corresponding number
+
 //Using the id of both the parent div and the piece, you can produce movement on the board
 function AddPieceToTile(pieceId, parentId) {
     document.getElementById(parentId).appendChild(document.getElementById(pieceId))

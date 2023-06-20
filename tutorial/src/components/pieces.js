@@ -28,7 +28,7 @@ function Piece(props){
                 break;
         }
         const pieceClick = () => {
-            console.log(kind + " was clicked")
+            Movement(kind, props.id)
         }
         return <img src={"/assets/"+pieceImg} className="piece" id={props.id} onClick={pieceClick}></img>
     }
@@ -82,15 +82,42 @@ function SpawnPieces(){
 
 // Function to handle all movement of the pieces
 // Takes in the kind of piece and determines what kind of base movement it can do
-function Movement(kind){
+function Movement(kind, id){
+    let black = id[0] == 'b'
+    let parentId = document.getElementById(id).parentElement.id;
+    
+    // If clicked with highlight, unhighlight or if another piece is clicked, unhighlight all others
+    console.log(document.getElementsByClassName("piece"));
+    const pieces = document.getElementsByClassName("piece");
+    for (let i = 0; i < pieces.length; i++) {
+        const element = pieces[i];
+        element.classList.remove("highlight");
+    }
+    const tiles = document.getElementsByClassName("tile");
+    for (let i = 0; i < tiles.length; i++) {
+        const element = tiles[i];
+        element.classList.remove("movement");
+        element.classList.remove("take");
+    }
+    document.getElementById(id).classList.add("highlight");
+    // If a tile is clicked and they have the movment class, move the piece to that tile
+
     switch (kind.toLowerCase()) {
         case "king":
             //King can only move 1 space, omnidirectional and can take on those spaces
             //King can casle
             break;
         case "pawn":
+            let forward = black ? parentId[0] + (parseInt(parentId[1])-1) : parentId[0] + (parseInt(parentId[1])+1)
+            //pawn can move 1 space forward
+            console.log(forward)
+            document.getElementById(forward).classList.add("movement")
             //pawn can move 2 spaces forward if on starting space
-            //pawn can move 1 space forward otherwise
+            console.log(black)
+            if (black && parentId[1] == '7' || !black && parentId[1] == '2'){
+                forward = black ? parentId[0] + (parseInt(parentId[1])-2) : parentId[0] + (parseInt(parentId[1])+2)
+                document.getElementById(forward).classList.add("movement")
+            }
             //pawn can take on diagonal spaces
             //en passant
             //when pawn reaches end of board, changes to different piece of the player's choosing
@@ -111,6 +138,7 @@ function Movement(kind){
         default:
             break;
     }
+    console.log(id+" "+kind + " was clicked")
 }
 
 export {Piece, SpawnPieces}
