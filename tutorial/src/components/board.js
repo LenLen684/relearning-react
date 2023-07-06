@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { Piece } from "./pieces";
-import {TileLetter} from "./support"
+import {TileLetter, AddPieceToTile} from "./support"
 
 function Tile(props){
     if(props.light && props.light == "true"){
@@ -83,11 +83,6 @@ function FillBoard(){
                 break;
         }
     }    
-}
-
-//Using the id of both the parent div and the piece, you can produce movement on the board
-function AddPieceToTile(pieceId, parentId) {
-    document.getElementById(parentId).appendChild(document.getElementById(pieceId))
 }
 
 export {CleanBoard, FillBoard};

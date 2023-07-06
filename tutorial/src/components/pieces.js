@@ -1,5 +1,5 @@
 import React from "react"
-import {TileLetter} from "./support"
+import {TileLetter, AddClassToElement, HasPiece, CheckElementHasClass, RemoveClassFromElement, RemoveClassesFromElementsByClassName} from "./support"
 
 function Piece(props){
     if(props.kind){
@@ -27,7 +27,10 @@ function Piece(props){
             default:
                 break;
         }
-        return <img src={"/assets/"+pieceImg} className="piece" id={props.id}></img>
+        const pieceClick = () => {
+            Movement(kind, props.id)
+        }
+        return <img src={"/assets/"+pieceImg} className="piece" id={props.id} onClick={pieceClick}></img>
     }
 }
 
@@ -75,6 +78,79 @@ function SpawnPieces(){
         }
     }
     return pieces
+}
+
+// Function to handle all movement of the pieces
+// Takes in the kind of piece and determines what kind of base movement it can do
+function Movement(kind, id){
+    let black = id[0] == 'b'
+    let parentId = document.getElementById(id).parentElement.id;
+    
+    // If clicked with highlight, unhighlight or if another piece is clicked, unhighlight all others
+    if(!CheckElementHasClass(id, "highlight")){
+        RemoveClassesFromElementsByClassName("piece", "highlight")
+        RemoveClassesFromElementsByClassName("tile", ["movement", "take"])
+        console.log(document.getElementsByClassName("piece"));
+
+        AddClassToElement(id, "highlight");
+    } else {
+        RemoveClassesFromElementsByClassName("piece", "highlight")
+        RemoveClassesFromElementsByClassName("tile", ["movement", "take"])
+        return;
+    }
+
+    // If a piece is highlighted and clicked again, deselect by removing the highlight
+
+    
+    // If a tile is clicked and they have the movment class, move the piece to that tile
+
+    switch (kind.toLowerCase()) {
+        case "king":
+            //King can only move 1 space, omnidirectional and can take on those spaces
+            //King can casle
+            break;
+        case "pawn":
+            let forward = black ? parentId[0] + (parseInt(parentId[1])-1) : parentId[0] + (parseInt(parentId[1])+1)
+            //pawn can move 1 space forward
+            console.log(forward)
+            AddClassToElement(forward, "movement")
+            //pawn can move 2 spaces forward if on starting space
+            console.log(black)
+            if (black && parentId[1] == '7' || !black && parentId[1] == '2'){
+                forward = black ? parentId[0] + (parseInt(parentId[1])-2) : parentId[0] + (parseInt(parentId[1])+2)
+                AddClassToElement(forward, "movement")
+            }
+            //pawn can take on diagonal spaces
+            //en passant
+            //when pawn reaches end of board, changes to different piece of the player's choosing
+            break;
+        case "rook":
+            //Rook can move and take vertically and horizontally
+            //Castling
+            break;
+        case "knight":
+            //Moves in an L shape (2 vertical 1 horizontal or 2 horizontal, 1 vertical)
+            // if(){
+                
+            // }
+            // AddClassToElement(forward, "movement")
+            break;
+        case "queen":
+            //Queen can move and take omnidirectionally, diagonal + vertical + horizontal
+            break;
+        case "bishop":
+            //Bishop moves and takes on the diagonals only
+            //if at H, can't move more left for black, or right for white
+            //if at A, can't move right for black, or left or white
+            // do {
+
+            // } while ();
+            // AddClassToElement(forward, "movement")
+            break;
+        default:
+            break;
+    }
+    console.log(id+" "+kind + " was clicked")
 }
 
 export {Piece, SpawnPieces}
