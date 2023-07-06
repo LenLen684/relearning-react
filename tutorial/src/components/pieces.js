@@ -1,5 +1,5 @@
 import React from "react"
-import {TileLetter} from "./support"
+import {TileLetter, AddClassToElement, HasPiece, CheckElementHasClass, RemoveClassFromElement, RemoveClassesFromElementsByClassName} from "./support"
 
 function Piece(props){
     if(props.kind){
@@ -87,19 +87,21 @@ function Movement(kind, id){
     let parentId = document.getElementById(id).parentElement.id;
     
     // If clicked with highlight, unhighlight or if another piece is clicked, unhighlight all others
-    console.log(document.getElementsByClassName("piece"));
-    const pieces = document.getElementsByClassName("piece");
-    for (let i = 0; i < pieces.length; i++) {
-        const element = pieces[i];
-        element.classList.remove("highlight");
+    if(!CheckElementHasClass(id, "highlight")){
+        RemoveClassesFromElementsByClassName("piece", "highlight")
+        RemoveClassesFromElementsByClassName("tile", ["movement", "take"])
+        console.log(document.getElementsByClassName("piece"));
+
+        AddClassToElement(id, "highlight");
+    } else {
+        RemoveClassesFromElementsByClassName("piece", "highlight")
+        RemoveClassesFromElementsByClassName("tile", ["movement", "take"])
+        return;
     }
-    const tiles = document.getElementsByClassName("tile");
-    for (let i = 0; i < tiles.length; i++) {
-        const element = tiles[i];
-        element.classList.remove("movement");
-        element.classList.remove("take");
-    }
-    document.getElementById(id).classList.add("highlight");
+
+    // If a piece is highlighted and clicked again, deselect by removing the highlight
+
+    
     // If a tile is clicked and they have the movment class, move the piece to that tile
 
     switch (kind.toLowerCase()) {
@@ -111,12 +113,12 @@ function Movement(kind, id){
             let forward = black ? parentId[0] + (parseInt(parentId[1])-1) : parentId[0] + (parseInt(parentId[1])+1)
             //pawn can move 1 space forward
             console.log(forward)
-            document.getElementById(forward).classList.add("movement")
+            AddClassToElement(forward, "movement")
             //pawn can move 2 spaces forward if on starting space
             console.log(black)
             if (black && parentId[1] == '7' || !black && parentId[1] == '2'){
                 forward = black ? parentId[0] + (parseInt(parentId[1])-2) : parentId[0] + (parseInt(parentId[1])+2)
-                document.getElementById(forward).classList.add("movement")
+                AddClassToElement(forward, "movement")
             }
             //pawn can take on diagonal spaces
             //en passant
@@ -128,12 +130,22 @@ function Movement(kind, id){
             break;
         case "knight":
             //Moves in an L shape (2 vertical 1 horizontal or 2 horizontal, 1 vertical)
+            // if(){
+                
+            // }
+            // AddClassToElement(forward, "movement")
             break;
         case "queen":
             //Queen can move and take omnidirectionally, diagonal + vertical + horizontal
             break;
         case "bishop":
             //Bishop moves and takes on the diagonals only
+            //if at H, can't move more left for black, or right for white
+            //if at A, can't move right for black, or left or white
+            // do {
+
+            // } while ();
+            // AddClassToElement(forward, "movement")
             break;
         default:
             break;
